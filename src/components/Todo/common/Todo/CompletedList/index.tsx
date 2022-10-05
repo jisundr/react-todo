@@ -32,7 +32,7 @@ export const TodoCompletedItem: FC<Props> = ({
       <Container className={classes.root}>
         <Checkbox
           checked
-          onChange={() => {
+          onChange={(e) => {
             items[itemIndex].isComplete = false;
             setItemsCallback([...items]);
           }}

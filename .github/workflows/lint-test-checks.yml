@@ -1,4 +1,4 @@
-name: React Todo CI
+name: Lint and Test Checks
 
 on:
   push:

@@ -1,0 +1,34 @@
+name: Build and Publish to NPM
+
+on:
+  workflow_run:
+    workflows: ["Lint and Test Checks"]
+    branches: [master]
+    types:
+      - completed
+
+jobs:
+  build-package-publish-to-npm:
+    # if: ${{ github.event.workflow_run.conclusion == 'success' && github.repository == 'upnotes-io/react-todo' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+
+      - name: Use Node.js ${{ matrix.node-version }} 🔧
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16.x"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install and Build Package 🔧
+        run: |
+          yarn
+          yarn build
+          echo "Publish to NPMJS workflow works"
+
+      # - name: Publish to NPMJS 🚀
+      #   run: yarn publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
